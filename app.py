@@ -58,7 +58,10 @@ def index():
         try:
             text=script_for(name,interests,extra); audio=folder/"voice.mp3"; voice(text,audio)
             out=OUTPUTS/f"{job}.mp4"; video(imgs,audio,out)
-        except Exception:
+       except Exception:
+    except Exception as e:
+    app.logger.exception(e)
+    return str(e), 500
             app.logger.exception("generation failed"); flash("Не удалось создать видео. Проверьте настройки сервера."); return render_template("index.html")
         return render_template("result.html",script=text,filename=out.name)
     return render_template("index.html")
